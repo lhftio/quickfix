@@ -139,6 +139,9 @@ namespace FIX50SP2
   class StreamAssignmentReport; 
   class StreamAssignmentReportACK;
 
+  class BustStart;
+  class BustEnd;
+  class ExecutionCancelRequest;
   class MessageCracker
   {
   public:
@@ -202,6 +205,12 @@ namespace FIX50SP2
   virtual void onMessage( const QuoteStatusRequest&, const FIX::SessionID& ) 
     { throw FIX::UnsupportedMessageType(); }
   virtual void onMessage( const MassQuoteAcknowledgement&, const FIX::SessionID& ) 
+    { throw FIX::UnsupportedMessageType(); }
+  virtual void onMessage( const BustStart&, const FIX::SessionID& ) 
+    { throw FIX::UnsupportedMessageType(); }
+  virtual void onMessage( const ExecutionCancelRequest&, const FIX::SessionID& ) 
+    { throw FIX::UnsupportedMessageType(); }
+  virtual void onMessage( const BustEnd&, const FIX::SessionID& ) 
     { throw FIX::UnsupportedMessageType(); }
   virtual void onMessage( const SecurityDefinitionRequest&, const FIX::SessionID& ) 
     { throw FIX::UnsupportedMessageType(); }
@@ -391,6 +400,9 @@ namespace FIX50SP2
  virtual void onMessage( QuoteCancel&, const FIX::SessionID& ) {} 
  virtual void onMessage( QuoteStatusRequest&, const FIX::SessionID& ) {} 
  virtual void onMessage( MassQuoteAcknowledgement&, const FIX::SessionID& ) {} 
+ virtual void onMessage( BustStart&, const FIX::SessionID& ) {} 
+ virtual void onMessage( ExecutionCancelRequest&, const FIX::SessionID& ) {} 
+ virtual void onMessage( BustEnd&, const FIX::SessionID& ) {} 
  virtual void onMessage( SecurityDefinitionRequest&, const FIX::SessionID& ) {} 
  virtual void onMessage( SecurityDefinition&, const FIX::SessionID& ) {} 
  virtual void onMessage( SecurityStatusRequest&, const FIX::SessionID& ) {} 
@@ -583,6 +595,15 @@ public:
     else
     if( msgTypeValue == "i" )
       onMessage( (const MassQuote&)message, sessionID );
+    else
+    if( msgTypeValue == "UH" )
+      onMessage( (const BustStart&)message, sessionID );
+    else
+    if( msgTypeValue == "UI" )
+      onMessage( (const BustEnd&)message, sessionID );
+    else
+    if( msgTypeValue == "UJ" )
+      onMessage( (const ExecutionCancelRequest&)message, sessionID );
     else
     if( msgTypeValue == "j" )
       onMessage( (const BusinessMessageReject&)message, sessionID );
@@ -916,6 +937,15 @@ void crack( Message& message,
     else
     if( msgTypeValue == "i" )
       onMessage( (MassQuote&)message, sessionID );
+    else
+    if( msgTypeValue == "UH" )
+      onMessage( (BustStart&)message, sessionID );
+    else
+    if( msgTypeValue == "UI" )
+      onMessage( (BustEnd&)message, sessionID );
+    else
+    if( msgTypeValue == "UJ" )
+      onMessage( (ExecutionCancelRequest&)message, sessionID );
     else
     if( msgTypeValue == "j" )
       onMessage( (BusinessMessageReject&)message, sessionID );

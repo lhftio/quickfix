@@ -33,8 +33,15 @@ namespace FIX50SP2
     FIELD_SET(*this, FIX::TradSesMode);
     FIELD_SET(*this, FIX::SubscriptionRequestType);
     FIELD_SET(*this, FIX::SecurityExchange);
+    FIELD_SET(*this, FIX::NoTradSesStatusEntries);
+    class NoTradSesStatusEntries: public FIX::Group
+    {
+    public:
+    NoTradSesStatusEntries(): FIX::Group(10098,10099,FIX::message_order(10099,55,0)){}
+      FIELD_SET(*this, FIX::TradSesType);
+      FIELD_SET(*this, FIX::Symbol);
+    };
   };
-
 }
 
 #endif

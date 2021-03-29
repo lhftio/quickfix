@@ -1535,5 +1535,10 @@ namespace FIX
   DEFINE_INT(StreamAsgnAckType);
   DEFINE_UTCTIMESTAMP(RelSymTransactTime);
   DEFINE_INT(StreamAsgnType);
+
+  DEFINE_STRING(BustID);
+  DEFINE_STRING(MMPxID);
+  DEFINE_NUMINGROUP(NoTradSesStatusEntries);
+  DEFINE_INT(TradSesType);
 }
 #endif //FIX_FIELDS_H
